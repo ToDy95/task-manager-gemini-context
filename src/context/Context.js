@@ -6,7 +6,8 @@ const Context = ({ children }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [individualData, setIndividualData] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [check, setCheck] = useState("")
+  const [check, setCheck] = useState(false)
+  const [checkedList, setCheckedList] = useState([])
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState('')
   //adumi datele originale din Json
@@ -30,8 +31,8 @@ const Context = ({ children }) => {
   }, [inputValue]);
   // daca bifez -> scoate card din ecran
   useEffect(() => {
-    setFilteredData(data.filter(item => !check.includes(item.id)));
-  }, [check, setFilteredData]);
+    setFilteredData(data.filter(item => !checkedList.includes(item.id)));
+  }, [checkedList, setFilteredData]);
   return (
     <globalContext.Provider value={{
       jsonData: [data, setData],
@@ -40,7 +41,8 @@ const Context = ({ children }) => {
       checked: [check, setCheck],
       modal: [modalIsOpen, setIsOpen],
       modalType: [modalType, setModalType],
-      routeData: [individualData, setIndividualData]
+      routeData: [individualData, setIndividualData],
+      checkedElement: [checkedList, setCheckedList]
     }}>
       {children}
     </globalContext.Provider>

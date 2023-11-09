@@ -6,16 +6,25 @@ import { globalContext } from "../context/Context";
 
 const Card = () => {
   const navigate = useNavigate()
-  const { jsonData, filterData, checked } = useContext(globalContext);
+  const { jsonData, filterData, checked, checkedElement } = useContext(globalContext);
   const [data] = jsonData;
   const [filteredData] = filterData;
+  const [checkedList, setCheckedList] = checkedElement
+  const [check, setCheck] = checked
 
-  const [, setCheck] = checked
+  const removeFromList = (item) => {
 
+    setCheck(true)
 
+    setCheckedList(prev => [...prev, item])
+
+    setCheck(false)
+
+  }
   return (
     // <Link to={'task/'+item.id}>
     //
+
     <>
       {
         filteredData.length > 0
@@ -24,7 +33,7 @@ const Card = () => {
               <div className={styles.firstLine}>
                 <div className={styles.taskId}>T - {item.id}</div>
                 <div>
-                  <input type="checkbox" onChange={() => setCheck(prev => [...prev, item.id])} />
+                  <input type="checkbox" checked={check} onChange={() => removeFromList(item.id)} />
                 </div>
                 <div className={styles.toDo}>{item.status}</div>
               </div>
@@ -43,7 +52,7 @@ const Card = () => {
               <div className={styles.firstLine}>
                 <div className={styles.taskId}>T - {item.id}</div>
                 <div>
-                  <input type="checkbox" onChange={() => setCheck(prev => [...prev, item.id])} />
+                  <input type="checkbox" checked={check} onChange={() => removeFromList(item.id)} />
                 </div>
                 <div className={styles.toDo}>{item.status}</div>
               </div>
